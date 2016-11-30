@@ -9,49 +9,49 @@
 #include "formatting.h"
 
 bool in_range(int x, int y, int x_lim, int y_lim) {
-    return !( x < 0 || x > x_lim - 1 || y < 0 || y > y_lim - 1);
+    return !(x < 0 || x > x_lim - 1 || y < 0 || y > y_lim - 1);
 }
 
-void get_args (int *argc, char *** argv) {
-    char * line = NULL;
+void get_args(int *argc, char ***argv) {
+    char *line = NULL;
     unsigned long length = 0;
     char lastchar = ' ';
     int start = 0;
     bool newArg, endArg;
-    
-    char **arguments = (char**)malloc(sizeof(char*));
+
+    char **arguments = (char **) malloc(sizeof(char *));
     int arg_count = 0;
-    
-    
+
+
     getline(&line, &length, stdin);
 
     length = strlen(line);
-    
+
     for (int i = 0; i < length; i++) {
         newArg = (!isspace(line[i]) && isspace(lastchar));
         endArg = (isspace(line[i]) && !isspace(lastchar)) || (!isspace(lastchar) && i + 1 == length);
-        
-        if( newArg ) {
+
+        if (newArg) {
             start = i;
         }
-        else if(endArg) {
-            
+        else if (endArg) {
+
             // Increase string array size
-            arguments = (char**) realloc (arguments, (arg_count + 1) * sizeof(char*));
-            
+            arguments = (char **) realloc(arguments, (arg_count + 1) * sizeof(char *));
+
             // Allocate memory for string
-            arguments[arg_count] = (char*) malloc ( (i - start + 1) * sizeof(char));
-            
+            arguments[arg_count] = (char *) malloc((i - start + 1) * sizeof(char));
+
             // Copy argument to string
             strncpy(arguments[arg_count], &line[start], (i - start));
-            
+
             // Increment number of arguments count
             arg_count += 1;
         }
         lastchar = line[i];
 
     }
-    
+
 //    for (int i = 0; i < arg_count; i++) {
 //        printf("%d: %s\n", i, arguments[i]);
 //    }
@@ -59,17 +59,17 @@ void get_args (int *argc, char *** argv) {
     *argc = arg_count;
 }
 
-void free_args(int * argc, char ** argv) {
+void free_args(int *argc, char **argv) {
     for (int i = 0; i < *argc; i++) {
         free(argv[i]);
     }
     free(argv);
-    
+
     *argc = 0;
-    
+
 }
 
-bool isPosInteger(char * string) {
+bool isPosInteger(char *string) {
     for (int index = 0; index < strlen(string); index++) {
         if (!isdigit(string[index])) {
             return false;

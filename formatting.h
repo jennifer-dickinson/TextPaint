@@ -17,8 +17,13 @@
 
 
 bool assert_formatting(int, int);
+
 bool in_range(int, int, int, int);
+
 void get_args(int *, char ***);
+
 void free_args(int *, char **);
+
 bool isPosInteger(char *);
+
 #endif /* formatting_h */

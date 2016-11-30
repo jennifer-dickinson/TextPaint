@@ -13,7 +13,8 @@
 #include <stdlib.h>
 #include "canvas.h"
 
-void saveCanvas( canvas *, char *);
-void loadCanvas( canvas *, char *);
+void saveCanvas(canvas *, char *);
+
+void loadCanvas(canvas *, char *);
 
 #endif /* saveload_h */

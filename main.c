@@ -13,21 +13,21 @@
 #include "draw.h"
 #include "formatting.h"
 
-void checkArgs (int argc, const char * argv[], int * row, int * col);
+void checkArgs(int argc, const char *argv[], int *row, int *col);
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[]) {
     int row, col;
-    
+
     checkArgs(argc, argv, &row, &col);
-    
+
     runTextPaint(row, col);
-    
+
     return 0;
 
 }
 
-void checkArgs (int argc, const char * argv[], int * row, int * col) {
-    if ( argc == 1 ) {
+void checkArgs(int argc, const char *argv[], int *row, int *col) {
+    if (argc == 1) {
         *row = 10;
         *col = 10;
         printf("Making default board of %d X %d.\n", *row, *col);
@@ -39,24 +39,24 @@ void checkArgs (int argc, const char * argv[], int * row, int * col) {
     }
     else {
         int args = 0;
-        
+
         args = sscanf(argv[1], " %d", row);
-        
+
         if (args < 1) {
             printf("The number of rows is not an integer.\n");
-            }
-        else if ( *row < 1) {
+        }
+        else if (*row < 1) {
             printf("The number of rows is less than 1.\n");
             exit(0);
         }
-        
+
         args = sscanf(argv[2], " %d", col);
-        
+
         if (args < 1) {
             printf("The number of columns is not an integer.\n");
             exit(0);
         }
-        else if ( *col < 1) {
+        else if (*col < 1) {
             printf("The number of columns is less than 1.\n");
             exit(0);
         }
