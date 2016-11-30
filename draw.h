@@ -12,7 +12,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "canvas.h"
-#include "formatting.h"
+#include "arguments.h"
 
 void drawLine(canvas *, int, char **);
 /* Summary: Takes two coordinates and attempts to draw a line on a canvas. Handles input validation

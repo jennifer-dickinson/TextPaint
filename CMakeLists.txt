@@ -10,8 +10,8 @@ set(SOURCE_FILES
     commands.h
     draw.c
     draw.h
-    formatting.c
-    formatting.h
+        arguments.c
+        arguments.h
     main.c
     Makefile
     README.md

@@ -11,7 +11,7 @@
 #include "canvas.h"
 #include "commands.h"
 #include "draw.h"
-#include "formatting.h"
+#include "arguments.h"
 
 void checkArgs(int argc, const char *argv[], int *row, int *col);
 

@@ -24,7 +24,6 @@ void drawLine(canvas *board, int argc, char **argv) {
     else {
         for (int i = 1; i < argc; i++) {
             if (!isPosInteger(argv[i]))  {
-//                printf("Coordinate not a positive integer- %d: %s\n", i, argv[i]);
                 goto BROKEN;
             }
             coor[i - 1] = atoi(argv[i]);
@@ -35,7 +34,6 @@ void drawLine(canvas *board, int argc, char **argv) {
     if (!in_range(coor[0], coor[1], board->col, board->row)
           || !in_range(coor[2], coor[3], board->col, board->row)) {
 
-//        printf("Coordinates not in range\n");
         BROKEN:
         printf("Improper draw command.\n");
     }
@@ -110,6 +108,7 @@ void draw_45(canvas *board, int x1, int y1, int x2) {
         if (board->grid[x1 + x][y1 + x] != '/' && board->grid[x1 + x][y1 + x] != '*') {
             board->grid[x1 + x][y1 + x] = '+';
         }
+        // Fill the line with a '/' to indicate a positive slope line
         else {
             board->grid[x1 + x][y1 + x] = '/';
         }
@@ -128,6 +127,7 @@ void draw_90(canvas *board, int x1, int y1, int y2) {
         if (board->grid[x1][y] != '|' && board->grid[x1][y] != '*') {
             board->grid[x1][y] = '+';
         }
+        // Fill the cell with a '|' to indicate a vertical line
         else {
             board->grid[x1][y] = '|';
         }
@@ -146,6 +146,7 @@ void draw_135(canvas *board, int x1, int y1, int x2) {
         if (board->grid[x1 - x][y1 + x] != '\\' && board->grid[x1 - x][y1 + x] != '*') {
             board->grid[x1 - x][y1 + x] = '+';
         }
+        // Fill the cell with a '\' to indicate a negative slope line
         else {
             board->grid[x1 - x][y1 + x] = '\\';
         }
@@ -163,6 +164,7 @@ void draw_180(canvas *board, int x1, int y1, int x2) {
         if (board->grid[x1 + x][y1] != '-' && board->grid[x1 + x][y1] != '*') {
             board->grid[x1 + x][y1] = '+';
         }
+        // Fill the cell with a '-' to indicate a horizontal line
         else {
             board->grid[x1 + x][y1] = '-';
         }
