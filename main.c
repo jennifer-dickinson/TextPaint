@@ -18,23 +18,9 @@ void checkArgs (int argc, const char * argv[], int * row, int * col);
 int main(int argc, const char * argv[]) {
     int row, col;
     
-    int promptArgsC = 0;
-    char ** promptArgs = NULL;
-    
     checkArgs(argc, argv, &row, &col);
     
-    canvas board = createCanvas(row, col);
-    
-    displayCanvas(board);
-
-    do {
-        printf("Enter your command: ");
-        get_args(&promptArgsC, &promptArgs);
-        read_command(promptArgsC, promptArgs, &board);
-        free_args(&promptArgsC, promptArgs);
-    }
-    while (true);
-    
+    runTextPaint(row, col);
     
     return 0;
 

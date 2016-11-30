@@ -8,8 +8,22 @@
 
 #include "commands.h"
 
-void run_program() {
+void runTextPaint(int row, int col) {
     
+    int promptArgsC = 0;
+    char ** promptArgs = NULL;
+    
+    canvas board = createCanvas(row, col);
+    
+    displayCanvas(board);
+    
+    do {
+        printf("Enter your command: ");
+        get_args(&promptArgsC, &promptArgs);
+        read_command(promptArgsC, promptArgs, &board);
+        free_args(&promptArgsC, promptArgs);
+    }
+    while (true);
 }
 
 void read_command(int argc, char ** argv, canvas * board) {
@@ -38,7 +52,7 @@ void mainCommand(char command, int argc, char ** argv, canvas * board) {
             
         case 'r':
         case 'R':
-            if (argc == 3 && isPosInteger(argv[1]) && (isPosInteger(argv[1]))) {
+            if (argc == 3 && isPosInteger(argv[1]) && (isPosInteger(argv[1])) && atoi(argv[1]) > 0 && atoi(argv[2]) > 0) {
                 resize(board, atoi(argv[1]), atoi(argv[2]));
                 displayCanvas(*board);
             }
@@ -50,17 +64,20 @@ void mainCommand(char command, int argc, char ** argv, canvas * board) {
         case 'a':
         case 'A':
             
-            if (argc == 3 && strlen(argv[1]) == 1 && (isPosInteger(argv[2]) ) ) {
+            if (argc == 3 && strlen(argv[1]) == 1 && (isPosInteger(argv[2]) ) && atoi(argv[2]) >= 0) {
                 switch (argv[1][0]) {
                     case 'r':
                     case 'R':
+                        if (atoi(argv[2]) > board->row) goto IAD;
                         addRow(board, atoi(argv[2]));
                         displayCanvas(*board);
                         break;
                     case 'c':
                     case 'C':
+                        if (atoi(argv[2]) > board->col) goto IAD;
                         addCol(board, atoi(argv[2]));
                         displayCanvas(*board);
+                        break;
                         
                     default:
                     IAD:
@@ -76,19 +93,23 @@ void mainCommand(char command, int argc, char ** argv, canvas * board) {
             
         case 'd':
         case 'D':
-            if (strlen(argv[1]) == 1 && isPosInteger(argv[2])) {
+            if (strlen(argv[1]) == 1) {
                 switch (argv[1][0]) {
                     case 'r':
                     case 'R':
+                        if (atoi(argv[2]) >= board->row || atoi(argv[2]) < 0 ||  ! isPosInteger(argv[2])) goto IDC;
                         delRow(board, atoi(argv[2]));
                         displayCanvas(*board);
                         break;
                     case 'c':
                     case 'C':
+                        if (atoi(argv[2]) >= board->col ||  atoi(argv[2]) < 0 || ! isPosInteger(argv[2])) goto IDC;
                         delCol(board, atoi(argv[2]));
                         displayCanvas(*board);
+                        break;
                         
                     default:
+                    IDC:
                         printf("Improper delete command.\n");
                         break;
                 }
@@ -98,18 +119,25 @@ void mainCommand(char command, int argc, char ** argv, canvas * board) {
         case 'e':
         case 'E':
             if (argc == 3 & strlen(argv[1]) == 1) {
-                if ( argv[1][0] == 'c') {
-                    eraseCol(board, atoi(argv[2]));
-                    displayCanvas(*board);
+                
+                switch (argv[1][0]) {
+                    case 'c':
+                    case 'C':
+                        if (atoi(argv[2]) >= board->col || ! isPosInteger(argv[2])) goto IEC;
 
-                }
-                else if (argv[1][0] == 'r') {
-                    eraseRow(board, atoi(argv[2]));
-                    displayCanvas(*board);
+                        eraseCol(board, atoi(argv[2]));
+                        displayCanvas(*board);
+                        break;
+                    case 'r':
+                    case 'R':
+                        if (atoi(argv[2]) >= board->row || ! isPosInteger(argv[2])) goto IEC;
 
-                }
-                else {
-                    printf("Improper erase command.\n");
+                        eraseRow(board, atoi(argv[2]));
+                        displayCanvas(*board);
+                    default:
+                    IEC:
+                        printf("Improper erase command.\n");
+                        break;
                 }
             }
             break;

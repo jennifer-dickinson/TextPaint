@@ -159,7 +159,7 @@ void delCol (canvas *board, int pos) {
     board->grid = (char**)realloc(board->grid, board->col * sizeof(char*));
 }
 
-void resize(canvas *board, int rows, int cols) {
+void resize(canvas *board, int cols, int rows) {
     int index;
     if (rows > board->row) {
         for (index = board->row; index < rows; index++) {

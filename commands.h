@@ -16,6 +16,7 @@
 #include "draw.h"
 #include "saveload.h"
 
+void runTextPaint(int, int);
 void read_command(int, char**, canvas *);
 void quit(canvas *);
 void print_help();

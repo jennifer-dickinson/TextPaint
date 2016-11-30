@@ -22,14 +22,15 @@ void saveCanvas( canvas * board, char * filename) {
         
         // Write to file
 
-        fprintf(outFile, "Columns: %d Rows: %d\n", board->col, board->row);
-        
-        for (int col_index = 0; col_index < board->col; col_index++) {
-            for (int row_index = 0; row_index < board->row; row_index++) {
+        fprintf(outFile, "Col: %d Row: %d\n", board->col, board->row);
+
+        for (int row_index = board->row - 1; row_index + 1 > 0; row_index--) {
+            for (int col_index = 0; col_index < board->col; col_index++) {
                 fprintf(outFile, "%c ", board->grid[col_index][row_index]);
             }
             fprintf(outFile, "\n");
         }
+    
         
         // Close file
 
@@ -51,19 +52,20 @@ void loadCanvas ( canvas * board, char * filename) {
         // Read file
         int col = 0;
         int row = 0;
-        fscanf(inFile, "Columns: %d Rows: %d ", &col, &row);
+        fscanf(inFile, "Col: %d Row: %d ", &col, &row);
         
-        printf("Columns: %d Rows: %d\n", board->col, board->row);
+        printf("Columns: %d Rows: %d\n", col, row);
         
         // Resize canvas
         resize(board, col, row);
         printf("resized\n");
         
         // Fill canvas with characters
-        for (int col_index = 0; col_index < board->col; col_index++) {
-            for (int row_index = 0; row_index < board->row; row_index++) {
-                fscanf(inFile, " %c ", &board->grid[col_index][row_index]);
+        for (int row_index = row - 1; row_index + 1 > 0; row_index--) {
+            for (int col_index = 0; col_index < col; col_index++) {
+                fscanf(inFile, "%c ", &board->grid[col_index][row_index]);
             }
+            fscanf(inFile, "\n");
         }
         
         // Close file
