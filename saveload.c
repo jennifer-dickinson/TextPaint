@@ -10,20 +10,22 @@
 
 
 void saveCanvas(canvas *board, char *filename) {
+    // Save the current grid to a readable file
+
     // Open file
     FILE *outFile = NULL;
-
     outFile = fopen(filename, "w");
 
+    // Check if the file has been opened
     if (outFile == NULL) {
         printf("Failed to open file: %s\n", filename);
     }
     else {
 
-        // Write to file
-
+        // Write number of rows and columns
         fprintf(outFile, "Col: %d Row: %d\n", board->col, board->row);
 
+        // Write the grid
         for (int row_index = board->row - 1; row_index + 1 > 0; row_index--) {
             for (int col_index = 0; col_index < board->col; col_index++) {
                 fprintf(outFile, "%c ", board->grid[col_index][row_index]);
@@ -31,9 +33,7 @@ void saveCanvas(canvas *board, char *filename) {
             fprintf(outFile, "\n");
         }
 
-
         // Close file
-
         fclose(outFile);
     }
 
@@ -41,16 +41,22 @@ void saveCanvas(canvas *board, char *filename) {
 }
 
 void loadCanvas(canvas *board, char *filename) {
+
     // Open file
     FILE *inFile = NULL;
     inFile = fopen(filename, "r");
+
+    // Check if file has been opened
     if (inFile == NULL) {
         printf("Failed to open file: %s\n", filename);
     }
+
     else {
         // Read file
         int col = 0;
         int row = 0;
+
+        // Get the number of rows and columns
         fscanf(inFile, "Col: %d Row: %d ", &col, &row);
 
         // Resize canvas
