@@ -53,11 +53,8 @@ void loadCanvas(canvas *board, char *filename) {
         int row = 0;
         fscanf(inFile, "Col: %d Row: %d ", &col, &row);
 
-        printf("Columns: %d Rows: %d\n", col, row);
-
         // Resize canvas
         resize(board, col, row);
-        printf("resized\n");
 
         // Fill canvas with characters
         for (int row_index = row - 1; row_index + 1 > 0; row_index--) {

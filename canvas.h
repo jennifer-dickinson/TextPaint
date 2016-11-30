@@ -37,28 +37,28 @@ void displayCanvas(canvas);
 
 void addRow(canvas *, int);
 /* Summary: Adds a row to a canvas at a given position
- * Parameters: canvas object, position of insertion
+ * Parameters: canvas pointer, position of insertion
  */
 
 void addCol(canvas *, int);
 /* Summary: Adds a column to a canvas at a given position
  *
- * Parameters: canvas object, position of insertion
+ * Parameters: canvas pointer, position of insertion
  */
 
 void delRow(canvas *, int);
 /* Summary: Deletes a row from a canvas at a given position
- * Parameters: canvas object, position of deletion
+ * Parameters: canvas pointer, position of deletion
  */
 
 void delCol(canvas *, int);
 /* Summary: Deletes a column from a canvas at a given position
- * Parameters: canvas object, position of deletion
+ * Parameters: canvas pointer, position of deletion
  */
 
 void resize(canvas *, int, int);
 /* Summary: Resizes a canvas to any combination of columns and rows
- * Parameters: canvas object, number of columns, number of rows
+ * Parameters: canvas pointer, number of columns, number of rows
  */
 
 

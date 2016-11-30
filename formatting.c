@@ -16,7 +16,7 @@ void get_args(int *argc, char ***argv) {
     char *line = NULL;
     unsigned long length = 0;
     char lastchar = ' ';
-    int start = 0;
+    int start = 0, i = 0;
     bool newArg, endArg;
 
     char **arguments = (char **) malloc(sizeof(char *));
@@ -27,14 +27,14 @@ void get_args(int *argc, char ***argv) {
 
     length = strlen(line);
 
-    for (int i = 0; i < length; i++) {
+    for (i = 0; i < length; i++) {
         newArg = (!isspace(line[i]) && isspace(lastchar));
         endArg = (isspace(line[i]) && !isspace(lastchar)) || (!isspace(lastchar) && i + 1 == length);
 
         if (newArg) {
             start = i;
         }
-        else if (endArg) {
+        if (endArg) {
 
             // Increase string array size
             arguments = (char **) realloc(arguments, (arg_count + 1) * sizeof(char *));
@@ -49,10 +49,8 @@ void get_args(int *argc, char ***argv) {
             arg_count += 1;
         }
         lastchar = line[i];
-
     }
-
-//    for (int i = 0; i < arg_count; i++) {
+//    for (i = 0; i < arg_count; i++) {
 //        printf("%d: %s\n", i, arguments[i]);
 //    }
     *argv = arguments;
@@ -71,9 +69,8 @@ void free_args(int *argc, char **argv) {
 
 bool isPosInteger(char *string) {
     for (int index = 0; index < strlen(string); index++) {
-        if (!isdigit(string[index])) {
+        if (!isdigit(string[index]))
             return false;
-        }
     }
     return true;
 }

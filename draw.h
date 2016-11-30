@@ -14,7 +14,7 @@
 #include "canvas.h"
 #include "formatting.h"
 
-void writeLine(canvas *, int, char **); // Validate line
+void drawLine(canvas *, int, char **); // Validate line
 double correctAngle(int *, int *, int *, int *); // Check if line is at 45, 90, 135 or 180 degrees
 void draw_45(canvas *, int, int, int, int); // Draw a line at 45 degrees counter-clockwise
 void draw_90(canvas *, int, int, int, int); // Draw a line at 90 degrees counter-clockwise

@@ -8,7 +8,7 @@
 
 #include "draw.h"
 
-void writeLine(canvas *board, int argc, char **argv) {
+void drawLine(canvas *board, int argc, char **argv) {
 
     int coor[4];
     // coor[0]: x1
@@ -35,15 +35,19 @@ void writeLine(canvas *board, int argc, char **argv) {
         double theta = correctAngle(&coor[0], &coor[1], &coor[2], &coor[3]);
 
         if (fabs(45 - theta) < .01) {
+            // Slope of 1
             draw_45(board, coor[0], coor[1], coor[2], coor[3]);
         }
         else if (fabs(90 - theta) < .01) {
+            // Undefined slope
             draw_90(board, coor[0], coor[1], coor[2], coor[3]);
         }
         else if (fabs(135 - theta) < .01) {
+            // Slope of -1
             draw_135(board, coor[0], coor[1], coor[2], coor[3]);
         }
         else if (fabs(0 - theta) < .01) {
+            // Slope of 0
             draw_180(board, coor[0], coor[1], coor[2], coor[3]);
 
         }
@@ -59,8 +63,11 @@ void writeLine(canvas *board, int argc, char **argv) {
 
 double correctAngle(int *x1, int *y1, int *x2, int *y2) {
     // Check angle of line & switch directions if necessary
+
+    // Get degrees of the line in respect to a polar graph
     double theta = atan2(*y2 - *y1, *x2 - *x1) * 180 / M_PI;
 
+    // If the angle is negative, switch the corrdinates
     if (theta < 0) {
         int tempx = *x1;
         *x1 = *x2;
@@ -70,9 +77,12 @@ double correctAngle(int *x1, int *y1, int *x2, int *y2) {
         *y1 = *y2;
         *y2 = tempy;
 
+        // Calculate the new angle
         theta = atan2(*y2 - *y1, *x2 - *x1) * 180 / M_PI;
 
     }
+
+    // If the angle is larger than 180 degrees, decrease by 180
     if (theta > 180) {
         theta -= 180;
     }
@@ -81,7 +91,7 @@ double correctAngle(int *x1, int *y1, int *x2, int *y2) {
 }
 
 void draw_45(canvas *board, int x1, int y1, int x2, int y2) {
-    // from bottom left to top right
+    // Draw a line with a slope of 1
 
     for (int x = 0; x <= x2 - x1; x++) {
         if (board->grid[x1 + x][y1 + x] != '/' && board->grid[x1 + x][y1 + x] != '*') {
@@ -96,8 +106,10 @@ void draw_45(canvas *board, int x1, int y1, int x2, int y2) {
 }
 
 void draw_90(canvas *board, int x1, int y1, int x2, int y2) {
-    // Draw vertically
+    // Draw a line with an undefined slope
+
     for (int y = y1; y <= y2; y++) {
+
         if (board->grid[x1][y] != '|' && board->grid[x1][y] != '*') {
             board->grid[x1][y] = '+';
         }
@@ -110,7 +122,7 @@ void draw_90(canvas *board, int x1, int y1, int x2, int y2) {
 }
 
 void draw_135(canvas *board, int x1, int y1, int x2, int y2) {
-    // Draw diagonall from bottom right to top left
+    // Draw a line a slope of -1
 
     for (int x = 0; x <= x1 - x2; x++) {
         if (board->grid[x1 - x][y1 + x] != '\\' && board->grid[x1 - x][y1 + x] != '*') {
@@ -124,7 +136,7 @@ void draw_135(canvas *board, int x1, int y1, int x2, int y2) {
 }
 
 void draw_180(canvas *board, int x1, int y1, int x2, int y2) {
-    // Draw horizontally
+    // Draw a line with a slope of 0
     for (int x = 0; x <= x2 - x1; x++) {
         if (board->grid[x1 + x][y1] != '-' && board->grid[x1 + x][y1] != '*') {
             board->grid[x1 + x][y1] = '+';
