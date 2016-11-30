@@ -1,6 +1,9 @@
 //
 //  canvas.h
-//  final_project_paint
+//  TextPaint
+//
+//  This file is responsible for creating, modifying and displaying a canvas. It provides options for resizing
+//
 //
 //  Created by Jennifer Salas on 11/28/16.
 //  Copyright © 2016 Jennifer Salas. All rights reserved.

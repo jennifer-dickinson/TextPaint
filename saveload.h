@@ -2,6 +2,8 @@
 //  saveload.h
 //  final_project_paint
 //
+//  saveload is responsible for saving and loading canvas grids
+//
 //  Created by Jennifer Salas on 11/29/16.
 //  Copyright © 2016 Jennifer Salas. All rights reserved.
 //

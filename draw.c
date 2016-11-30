@@ -1,6 +1,8 @@
 //
 //  draw.c
-//  final_project_paint
+//  TextPaint
+//
+//  To view descriptions and details for this file, view draw.h
 //
 //  Created by Jennifer Salas on 11/29/16.
 //  Copyright © 2016 Jennifer Salas. All rights reserved.

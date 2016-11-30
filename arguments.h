@@ -1,6 +1,8 @@
 //
-//  formatting.h
-//  final_project_paint
+//  arguments.h
+//  TextPaint
+//
+//  arguments.c is responsible for capturing and parsing user input into readable formats for other functions
 //
 //  Created by Jennifer Salas on 11/29/16.
 //  Copyright © 2016 Jennifer Salas. All rights reserved.

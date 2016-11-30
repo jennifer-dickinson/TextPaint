@@ -1,6 +1,8 @@
 //
 //  draw.h
-//  final_project_paint
+//  TextPaint
+//
+//  draw.c is responsible for modifying the contents of a canvas, drawing a line and erasign columns and rows.
 //
 //  Created by Jennifer Salas on 11/29/16.
 //  Copyright © 2016 Jennifer Salas. All rights reserved.

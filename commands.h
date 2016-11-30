@@ -1,6 +1,9 @@
 //
 //  commands.h
-//  final_project_paint
+//  TextPaint
+//
+//  This file is responsible for displaying the grid to the console, requesting user commands, performing commands,
+//  and quitting the program
 //
 //  Created by Jennifer Salas on 11/29/16.
 //  Copyright © 2016 Jennifer Salas. All rights reserved.
