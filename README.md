@@ -2,13 +2,14 @@
 
 ___
 #####Author: Jennifer Salas
-___
+
 #####Created: November 30th, 2016
+___
 
 This is a text-based paint program that will generage a 10x10 grid by default. A user may draw lines, resize the grid, add or delete columns and rows, erase columns or rows, save the current grid to a file or load a previously saved grid.
 
 To run:
-* ./paint.out [ num_rows num_columns ]
+* ./paint.out [ num_row num_col ]
 
 To compile:
 * make
