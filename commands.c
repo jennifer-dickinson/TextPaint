@@ -67,6 +67,7 @@ void read_command(int argc, char **argv, canvas *board) {
         // Draw a line
         case 'w':
         case 'W':
+            // Input validation is handled by drawLine();
             drawLine(board, argc, argv);
             break;
 

@@ -9,6 +9,7 @@
 #include "draw.h"
 
 void drawLine(canvas *board, int argc, char **argv) {
+    // Draw a line on the canvas from (x1, y1) to (x2, y2)
 
     int coor[4];
     // coor[0]: x1
@@ -16,45 +17,54 @@ void drawLine(canvas *board, int argc, char **argv) {
     // coor[2]: x2
     // coor[3]: y2
 
-    // Are arguments correct?
-    if (argc != 5) {
-        goto BROKEN;
-    }
+    // Number of arguments must equal 5
+    if (argc != 5) goto BROKEN;
+
+    // Assign 2nd to 5th arguments to coor[].
     else {
         for (int i = 1; i < argc; i++) {
+            if (!isPosInteger(argv[i]))  {
+//                printf("Coordinate not a positive integer- %d: %s\n", i, argv[i]);
+                goto BROKEN;
+            }
             coor[i - 1] = atoi(argv[i]);
         }
     }
-    // Are coordinates in range?
-    if (!(in_range(coor[0], coor[1], board->col, board->row) && in_range(coor[2], coor[3], board->col, board->row))) {
+
+    // Coordinates must be within range of the canvas grid
+    if (!in_range(coor[0], coor[1], board->col, board->row)
+          || !in_range(coor[2], coor[3], board->col, board->row)) {
+
+//        printf("Coordinates not in range\n");
         BROKEN:
         printf("Improper draw command.\n");
     }
-    else {
 
+    // Attempt to draw the line
+    else {
+        // Calculate the angle of the line
         double theta = correctAngle(&coor[0], &coor[1], &coor[2], &coor[3]);
 
-        if (fabs(45 - theta) < .01) {
-            // Slope of 1
-            draw_45(board, coor[0], coor[1], coor[2], coor[3]);
+        if (fabs(45 - theta) < .001) {
+            // Slope of 1, draw a line from left to right increasing in x and y direction
+            draw_45(board, coor[0], coor[1], coor[2]);
         }
-        else if (fabs(90 - theta) < .01) {
-            // Undefined slope
-            draw_90(board, coor[0], coor[1], coor[2], coor[3]);
+        else if (fabs(90 - theta) < .001) {
+            // Undefined slope, draw a line x remaining static and increasing in y direction
+            draw_90(board, coor[0], coor[1], coor[3]);
         }
-        else if (fabs(135 - theta) < .01) {
-            // Slope of -1
-            draw_135(board, coor[0], coor[1], coor[2], coor[3]);
+        else if (fabs(135 - theta) < .001) {
+            // Slope of -1, draw a line from left to right increasing in x and decreasing in y
+            draw_135(board, coor[0], coor[1], coor[2]);
         }
-        else if (fabs(0 - theta) < .01) {
-            // Slope of 0
-            draw_180(board, coor[0], coor[1], coor[2], coor[3]);
-
+        else if (fabs(0 - theta) < .001) {
+            // Slope of 0, draw a line from left to right increasing in x and y remaining static
+            draw_180(board, coor[0], coor[1], coor[2]);
         }
 
         else {
+            // The line cannot be represented by the grid, do not draw
             printf("Cannot draw the line as it is not straight.\n");
-
         }
     }
 
@@ -64,10 +74,10 @@ void drawLine(canvas *board, int argc, char **argv) {
 double correctAngle(int *x1, int *y1, int *x2, int *y2) {
     // Check angle of line & switch directions if necessary
 
-    // Get degrees of the line in respect to a polar graph
+    // Get degrees of the line with respect to a polar graph
     double theta = atan2(*y2 - *y1, *x2 - *x1) * 180 / M_PI;
 
-    // If the angle is negative, switch the corrdinates
+    // If the angle is negative, switch the coordinates
     if (theta < 0) {
         int tempx = *x1;
         *x1 = *x2;
@@ -90,10 +100,13 @@ double correctAngle(int *x1, int *y1, int *x2, int *y2) {
     return theta;
 }
 
-void draw_45(canvas *board, int x1, int y1, int x2, int y2) {
+void draw_45(canvas *board, int x1, int y1, int x2) {
     // Draw a line with a slope of 1
 
     for (int x = 0; x <= x2 - x1; x++) {
+        // As x increases, y increases equally
+
+        // If the cell is filled with a line of a different slope, fill with a '+'
         if (board->grid[x1 + x][y1 + x] != '/' && board->grid[x1 + x][y1 + x] != '*') {
             board->grid[x1 + x][y1 + x] = '+';
         }
@@ -105,11 +118,13 @@ void draw_45(canvas *board, int x1, int y1, int x2, int y2) {
     displayCanvas(*board);
 }
 
-void draw_90(canvas *board, int x1, int y1, int x2, int y2) {
-    // Draw a line with an undefined slope
+void draw_90(canvas *board, int x1, int y1, int y2) {
+    // Draw a line with an undefined slope (vertical line)
 
     for (int y = y1; y <= y2; y++) {
+        // As y increases, x remains static
 
+        // If the cell is filled with a line of a different slope, fill with a '+'
         if (board->grid[x1][y] != '|' && board->grid[x1][y] != '*') {
             board->grid[x1][y] = '+';
         }
@@ -121,10 +136,13 @@ void draw_90(canvas *board, int x1, int y1, int x2, int y2) {
 
 }
 
-void draw_135(canvas *board, int x1, int y1, int x2, int y2) {
+void draw_135(canvas *board, int x1, int y1, int x2) {
     // Draw a line a slope of -1
 
     for (int x = 0; x <= x1 - x2; x++) {
+        // As x increases, y decreases equally
+
+        // If the cell is filled with a line of a different slope, fill with a '+'
         if (board->grid[x1 - x][y1 + x] != '\\' && board->grid[x1 - x][y1 + x] != '*') {
             board->grid[x1 - x][y1 + x] = '+';
         }
@@ -135,9 +153,13 @@ void draw_135(canvas *board, int x1, int y1, int x2, int y2) {
     displayCanvas(*board);
 }
 
-void draw_180(canvas *board, int x1, int y1, int x2, int y2) {
-    // Draw a line with a slope of 0
+void draw_180(canvas *board, int x1, int y1, int x2) {
+    // Draw a line with a slope of 0 (horizontal line)
+
     for (int x = 0; x <= x2 - x1; x++) {
+        // As x increases, y remains static
+
+        // If the cell is filled with a line of a different slope, fill with a '+'
         if (board->grid[x1 + x][y1] != '-' && board->grid[x1 + x][y1] != '*') {
             board->grid[x1 + x][y1] = '+';
         }
@@ -150,12 +172,16 @@ void draw_180(canvas *board, int x1, int y1, int x2, int y2) {
 }
 
 void eraseRow(canvas *board, int pos) {
+    // Erase a row at a given position by filling with asterisks
+
     for (int col_index = 0; col_index < board->col; col_index++) {
         board->grid[col_index][pos] = '*';
     }
 }
 
 void eraseCol(canvas *board, int pos) {
+    // Erase a column at a given position by filling with asterisks
+
     for (int row_index = 0; row_index < board->row; row_index++) {
         board->grid[pos][row_index] = '*';
     }

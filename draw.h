@@ -14,14 +14,45 @@
 #include "canvas.h"
 #include "formatting.h"
 
-void drawLine(canvas *, int, char **); // Validate line
-double correctAngle(int *, int *, int *, int *); // Check if line is at 45, 90, 135 or 180 degrees
-void draw_45(canvas *, int, int, int, int); // Draw a line at 45 degrees counter-clockwise
-void draw_90(canvas *, int, int, int, int); // Draw a line at 90 degrees counter-clockwise
-void draw_135(canvas *, int, int, int, int); // Draw a line at 135 degrees counter-clockwise
-void draw_180(canvas *, int, int, int, int); // Draw a line at 180 degrees counter-clockwise
-void eraseRow(canvas *, int);
+void drawLine(canvas *, int, char **);
+/* Summary: Takes two coordinates and attempts to draw a line on a canvas. Handles input validation
+ * Parameters: canvas pointer, argument count, array of string arguments
+ */
+
+double correctAngle(int *, int *, int *, int *);
+/* Summary:  Calculates the angle in degrees of a line with respect to a polar graph, switching the order if required
+ * Parameters: int pointer x1, int pointer y1, int pointer x2, int pointer y2
+ */
+
+void draw_45(canvas *, int, int, int);
+/* Summary: Draw a line with a slope of 1 between two points
+ * Parameters: canvas pointer, starting x, starting y, ending x
+ */
+
+void draw_90(canvas *, int, int, int);
+/* Summary: Draw a line with an undefined slope between two points
+ * Parameters: canvas pointer, starting x, starting y, ending y
+ */
+
+void draw_135(canvas *, int, int, int);
+/* Summary: Draw a line with a slope of -1 between two points
+ * Parameters: canvas pointer, starting x, starting y, ending x
+ */
+
+void draw_180(canvas *, int, int, int);
+/* Summary: Draw a line with a slope of 0 between two points
+ * Parameters: canvas pointer, starting x, starting y, ending x
+ */
 
 void eraseCol(canvas *, int);
+/* Summary: Erases the column of a canvas at a given position
+ * Parameters: canvas pointer, column position
+ */
+
+void eraseRow(canvas *, int);
+/* Summary: Erases the row of a canvas at a given position
+ * Parameters: canvas pointer, row position
+ */
+
 
 #endif /* draw_h */

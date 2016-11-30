@@ -35,15 +35,17 @@ void get_args(int *argc, char ***argv) {
             start = i;
         }
         if (endArg) {
-
             // Increase string array size
             arguments = (char **) realloc(arguments, (arg_count + 1) * sizeof(char *));
 
             // Allocate memory for string
-            arguments[arg_count] = (char *) malloc((i - start + 1) * sizeof(char));
+            arguments[arg_count] = (char *) malloc((i - start) * sizeof(char));
 
             // Copy argument to string
             strncpy(arguments[arg_count], &line[start], (i - start));
+
+            // Fixed glitch where string would sometimes include garbage
+            arguments[arg_count][i-start] = '\0';
 
             // Increment number of arguments count
             arg_count += 1;
@@ -59,6 +61,7 @@ void get_args(int *argc, char ***argv) {
 
 void free_args(int *argc, char **argv) {
     for (int i = 0; i < *argc; i++) {
+        argv[i] = (char*)realloc(argv[i], 0);
         free(argv[i]);
     }
     free(argv);

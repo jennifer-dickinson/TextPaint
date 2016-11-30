@@ -15,9 +15,6 @@
 #include <ctype.h>
 #include <string.h>
 
-
-bool assert_formatting(int, int);
-
 bool in_range(int, int, int, int);
 
 void get_args(int *, char ***);
