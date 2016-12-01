@@ -26,22 +26,22 @@ double correctAngle(int *, int *, int *, int *);
  * Parameters: int pointer x1, int pointer y1, int pointer x2, int pointer y2
  */
 
-void draw_45(canvas *, int, int, int);
+void draw45(canvas *, int, int, int);
 /* Summary: Draw a line with a slope of 1 between two points
  * Parameters: canvas pointer, starting x, starting y, ending x
  */
 
-void draw_90(canvas *, int, int, int);
+void draw90(canvas *, int, int, int);
 /* Summary: Draw a line with an undefined slope between two points
  * Parameters: canvas pointer, starting x, starting y, ending y
  */
 
-void draw_135(canvas *, int, int, int);
+void draw135(canvas *, int, int, int);
 /* Summary: Draw a line with a slope of -1 between two points
  * Parameters: canvas pointer, starting x, starting y, ending x
  */
 
-void draw_180(canvas *, int, int, int);
+void draw180(canvas *, int, int, int);
 /* Summary: Draw a line with a slope of 0 between two points
  * Parameters: canvas pointer, starting x, starting y, ending x
  */

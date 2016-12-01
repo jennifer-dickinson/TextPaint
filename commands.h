@@ -24,7 +24,7 @@ void runTextPaint(int, int);
  * Parameters: row, column
  */
 
-void read_command(int, char **, canvas *);
+void readCommand(int, char **, canvas *);
 /* Summary: Reads user input to modify, save, load, or display a canvas, or quit the program.
  * Parameters: number of arguments, list of arguments, canvas pointer.
  */
@@ -34,7 +34,7 @@ void quit(canvas *);
  * Parameters: canvas pointer
  */
 
-void print_help();
+void printHelp();
 /* Summary: displays all valid user commands
  */
 

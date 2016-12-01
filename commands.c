@@ -11,6 +11,7 @@
 #include "commands.h"
 
 void runTextPaint(int row, int col) {
+    // The main part of the program.
 
     int promptArgsC = 0;
     char **promptArgs = NULL;
@@ -29,19 +30,19 @@ void runTextPaint(int row, int col) {
         printf("Enter your command: ");
 
         // Get user number of arguments and an arguments array
-        get_args(&promptArgsC, &promptArgs);
+        getArgs(&promptArgsC, &promptArgs);
 
         // Read and execute command
-        read_command(promptArgsC, promptArgs, &board);
+        readCommand(promptArgsC, promptArgs, &board);
 
         // Clear memory for  number of arguments and arguments array
-        free_args(&promptArgsC, promptArgs);
+        freeArgs(&promptArgsC, promptArgs);
     }
     while (true); // Continue indefinitely. Will end with user input of 'q' in read_command
 #pragma clang diagnostic pop
 }
 
-void read_command(int argc, char **argv, canvas *board) {
+void readCommand(int argc, char **argv, canvas *board) {
 
     // If the first argument is longer than a single character, skip
     if (strlen(argv[0]) > 1) goto UNRECOGNIZED;
@@ -55,7 +56,7 @@ void read_command(int argc, char **argv, canvas *board) {
         case 'H':
             // If more than one argument, skip
             if (argc != 1) goto UNRECOGNIZED;
-            print_help();
+            printHelp();
             break;
 
         // Quit program
@@ -76,7 +77,7 @@ void read_command(int argc, char **argv, canvas *board) {
         // Resize canvas grid
         case 'r':
         case 'R':
-            // Argument count  must equal 3
+            // Argument count must equal 3
             // Second and third arguments must be integers greater than 0 to modify number of columns and rows
             if (argc != 3 || !isPosInteger(argv[1]) || !isPosInteger(argv[2]) || atoi(argv[1]) <= 0 ||
                 atoi(argv[2]) <= 0) {
@@ -91,7 +92,7 @@ void read_command(int argc, char **argv, canvas *board) {
         // Add a column or row
         case 'a':
         case 'A':
-            // Argument count must be 3
+            // Argument count must equal 3
             // Second argument must be a single character to modify column or row
             // Third argument must be a positive integer
             if (argc != 3 || strlen(argv[1]) != 1 || !isPosInteger(argv[2])) goto IAD;
@@ -113,7 +114,7 @@ void read_command(int argc, char **argv, canvas *board) {
                 case 'r':
                 case 'R':
 
-                    // If requested column position is out of range, skip to improper command
+                    // If requested row position is out of range, skip to improper command
                     if (atoi(argv[2]) > board->row) goto IAD;
                     addRow(board, atoi(argv[2]));
                     displayCanvas(*board);
@@ -130,6 +131,7 @@ void read_command(int argc, char **argv, canvas *board) {
         // Delete a column or row
         case 'd':
         case 'D':
+
             // Argument count must be three
             // Second argument must be a single character to modify column or row
             // Third argument must be a positive integer
@@ -247,7 +249,7 @@ void quit(canvas *board) {
     exit(0);
 }
 
-void print_help() {
+void printHelp() {
     // Print out the list of commands to the console
 
     printf("Commands:\n");

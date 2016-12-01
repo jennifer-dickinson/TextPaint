@@ -10,26 +10,29 @@
 
 #include "arguments.h"
 
-bool in_range(int x, int y, int x_lim, int y_lim) {
+bool inRange(int x, int y, int x_lim, int y_lim) {
     // Check if two points are within range of a grid
     return !(x < 0 || x > x_lim - 1 || y < 0 || y > y_lim - 1);
 }
 
-void get_args(int *argc, char ***argv) {
+void getArgs(int *argc, char ***argv) {
     // Read a line of user input and split into number of arguments and a string array of arguments
 
-    // Generate a placeholders for information
-    char *line = NULL;
-    char **arguments = (char **) malloc(sizeof(char *));
-    int argCount = 0;
+    // Generate placeholders for information
+    char *line = NULL; // To store the substring
+    char **arguments = (char **) malloc(sizeof(char *)); // To store multiple substrings
+    int argCount = 0; // Count the number of strings
 
     // Length of input string
     unsigned long length = 0;
 
     // Placeholder for bool logic
     char lastChar = ' ';
+
+    //start of a new substring, end of last substring
     bool newArg, endArg;
 
+    // starting position of substring, length of substring, index of string
     int startPos = 0, argLen = 0, index = 0;
 
     // Get the string of user input
@@ -40,10 +43,10 @@ void get_args(int *argc, char ***argv) {
 
     for (index = 0; index < length; index++) {
 
-        // Is the current character the start of an argument?
+        // Is the current character the start of an substring?
         newArg = (!isspace(line[index]) && isspace(lastChar));
 
-        // Is the current character the end of an argument?
+        // Is the current character the end of an substring?
         endArg = (isspace(line[index]) && !isspace(lastChar)) || (!isspace(lastChar) && index + 1 == length);
 
         if (newArg) {
@@ -74,12 +77,12 @@ void get_args(int *argc, char ***argv) {
         lastChar = line[index];
     }
 
-    // Point the paramters to argument array and argument count
+    // Point the parameters to argument array and argument count
     *argv = arguments;
     *argc = argCount;
 }
 
-void free_args(int *argc, char **argv) {
+void freeArgs(int *argc, char **argv) {
     // Free the memory the argument array and reset argument to zero
 
     for (int i = 0; i < *argc; i++) {

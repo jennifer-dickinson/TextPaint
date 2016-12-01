@@ -25,16 +25,16 @@ void drawLine(canvas *board, int argc, char **argv) {
     // Assign 2nd to 5th arguments to coor[].
     else {
         for (int i = 1; i < argc; i++) {
-            if (!isPosInteger(argv[i]))  {
-                goto BROKEN;
-            }
+
+            // If the parameters are not integers, skip
+            if (!isPosInteger(argv[i])) goto BROKEN;
             coor[i - 1] = atoi(argv[i]);
         }
     }
 
     // Coordinates must be within range of the canvas grid
-    if (!in_range(coor[0], coor[1], board->col, board->row)
-          || !in_range(coor[2], coor[3], board->col, board->row)) {
+    if (!inRange(coor[0], coor[1], board->col, board->row)
+          || !inRange(coor[2], coor[3], board->col, board->row)) {
 
         BROKEN:
         printf("Improper draw command.\n");
@@ -47,19 +47,19 @@ void drawLine(canvas *board, int argc, char **argv) {
 
         if (fabs(45 - theta) < .001) {
             // Slope of 1, draw a line from left to right increasing in x and y direction
-            draw_45(board, coor[0], coor[1], coor[2]);
+            draw45(board, coor[0], coor[1], coor[2]);
         }
         else if (fabs(90 - theta) < .001) {
             // Undefined slope, draw a line x remaining static and increasing in y direction
-            draw_90(board, coor[0], coor[1], coor[3]);
+            draw90(board, coor[0], coor[1], coor[3]);
         }
         else if (fabs(135 - theta) < .001) {
             // Slope of -1, draw a line from left to right increasing in x and decreasing in y
-            draw_135(board, coor[0], coor[1], coor[2]);
+            draw135(board, coor[0], coor[1], coor[2]);
         }
         else if (fabs(0 - theta) < .001) {
             // Slope of 0, draw a line from left to right increasing in x and y remaining static
-            draw_180(board, coor[0], coor[1], coor[2]);
+            draw180(board, coor[0], coor[1], coor[2]);
         }
 
         else {
@@ -100,7 +100,7 @@ double correctAngle(int *x1, int *y1, int *x2, int *y2) {
     return theta;
 }
 
-void draw_45(canvas *board, int x1, int y1, int x2) {
+void draw45(canvas *board, int x1, int y1, int x2) {
     // Draw a line with a slope of 1
 
     for (int x = 0; x <= x2 - x1; x++) {
@@ -119,7 +119,7 @@ void draw_45(canvas *board, int x1, int y1, int x2) {
     displayCanvas(*board);
 }
 
-void draw_90(canvas *board, int x1, int y1, int y2) {
+void draw90(canvas *board, int x1, int y1, int y2) {
     // Draw a line with an undefined slope (vertical line)
 
     for (int y = y1; y <= y2; y++) {
@@ -138,7 +138,7 @@ void draw_90(canvas *board, int x1, int y1, int y2) {
 
 }
 
-void draw_135(canvas *board, int x1, int y1, int x2) {
+void draw135(canvas *board, int x1, int y1, int x2) {
     // Draw a line a slope of -1
 
     for (int x = 0; x <= x1 - x2; x++) {
@@ -156,7 +156,7 @@ void draw_135(canvas *board, int x1, int y1, int x2) {
     displayCanvas(*board);
 }
 
-void draw_180(canvas *board, int x1, int y1, int x2) {
+void draw180(canvas *board, int x1, int y1, int x2) {
     // Draw a line with a slope of 0 (horizontal line)
 
     for (int x = 0; x <= x2 - x1; x++) {
