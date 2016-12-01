@@ -7,15 +7,14 @@ ___
 **Created: November 30th, 2016**
 ___
 
+###To compile:
+```
+make
+```
 
 ###To run:
 ```
 ./paint.out [ num_row num_col ]
-```
-
-###To compile:
-```
-make
 ```
 
 ###Commands:
