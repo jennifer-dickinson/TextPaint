@@ -31,6 +31,9 @@ Save:        s file_name
 Load:        l file_name
 ```
 
+A sample save file is provided, load with ` l samplesave `.
+
 ###Other
 
 For descriptions of individual .c files and functions, view the corresponding .h files.
+
