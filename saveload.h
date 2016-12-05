@@ -16,6 +16,7 @@
 #include "canvas.h"
 
 void saveCanvas(canvas *, char *);
+
 /* Summary: Save the current status of the grid to a file
  * Parameters: canvas pointer, file name
  */

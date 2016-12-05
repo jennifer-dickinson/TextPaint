@@ -11,7 +11,7 @@
 #include "arguments.h"
 
 bool inRange(int x, int y, int x_lim, int y_lim) {
-    // Check if two points are within range of a grid
+    // Check if two points are within range of the grid
     return !(x < 0 || x > x_lim - 1 || y < 0 || y > y_lim - 1);
 }
 

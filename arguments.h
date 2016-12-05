@@ -18,10 +18,12 @@
 #include <string.h>
 
 bool inRange(int, int, int, int);
+
 /* Summary: Check if a point is within range of a grid
  * Parameters: x1, y1, grid columns, grid rows
  */
 void getArgs(int *, char ***);
+
 /* Summary: Get a user input line and split into number of arguments and a string array of arguments
  * Parameters: pointer to number of arguments, pointer to a string array of arguments
  */

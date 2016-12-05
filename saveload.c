@@ -21,8 +21,7 @@ void saveCanvas(canvas *board, char *filename) {
     // Check if the file has been opened
     if (outFile == NULL) {
         printf("Failed to open file: %s\n", filename);
-    }
-    else {
+    } else {
 
         // Write number of rows and columns
         fprintf(outFile, "Col: %d Row: %d\n", board->col, board->row);
@@ -51,9 +50,7 @@ void loadCanvas(canvas *board, char *filename) {
     // Check if file has been opened
     if (inFile == NULL) {
         printf("Failed to open file: %s\n", filename);
-    }
-
-    else {
+    } else {
         // Read file
         int col = 0;
         int row = 0;
@@ -74,8 +71,5 @@ void loadCanvas(canvas *board, char *filename) {
 
         // Close file
         fclose(inFile);
-
-        // Display Canvas
-        displayCanvas(*board);
     }
 }

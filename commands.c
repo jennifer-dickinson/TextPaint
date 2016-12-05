@@ -19,13 +19,11 @@ void runTextPaint(int row, int col) {
     // Generate a canvas object
     canvas board = createCanvas(row, col);
 
-    // Display the canvas grid
-    displayCanvas(board);
+    // Continue indefinitely. Will end with user input of 'q' in readCommand()
+    while (true) {
+        // Display the canvas grid
+        displayCanvas(board);
 
-    // Ignore any infinite loop warnings (We want this)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wmissing-noreturn"
-    do {
         // Prompt user for input
         printf("Enter your command: ");
 
@@ -38,8 +36,6 @@ void runTextPaint(int row, int col) {
         // Clear memory for  number of arguments and arguments array
         freeArgs(&promptArgsC, promptArgs);
     }
-    while (true); // Continue indefinitely. Will end with user input of 'q' in read_command
-#pragma clang diagnostic pop
 }
 
 void readCommand(int argc, char **argv, canvas *board) {
@@ -59,7 +55,7 @@ void readCommand(int argc, char **argv, canvas *board) {
             printHelp();
             break;
 
-        // Quit program
+            // Quit program
         case 'q':
         case 'Q':
             // If more than one argument, skip
@@ -67,14 +63,14 @@ void readCommand(int argc, char **argv, canvas *board) {
             quit(board);
             break;
 
-        // Draw a line
+            // Draw a line
         case 'w':
         case 'W':
             // Input validation is handled by drawLine();
             drawLine(board, argc, argv);
             break;
 
-        // Resize canvas grid
+            // Resize canvas grid
         case 'r':
         case 'R':
             // Argument count must equal 3
@@ -85,11 +81,11 @@ void readCommand(int argc, char **argv, canvas *board) {
                 break;
             }
 
-            resize(board, atoi(argv[1]), atoi(argv[2]));
-            displayCanvas(*board);
+            resize(board, atoi(argv[2]), atoi(argv[1]));
+
             break;
 
-        // Add a column or row
+            // Add a column or row
         case 'a':
         case 'A':
             // Argument count must equal 3
@@ -107,20 +103,20 @@ void readCommand(int argc, char **argv, canvas *board) {
                     // If requested column position is out of range, skip to improper command
                     if (atoi(argv[2]) > board->col) goto IAD;
                     addCol(board, atoi(argv[2]));
-                    displayCanvas(*board);
+
                     break;
 
-                // Add a row at given position
+                    // Add a row at given position
                 case 'r':
                 case 'R':
 
                     // If requested row position is out of range, skip to improper command
                     if (atoi(argv[2]) > board->row) goto IAD;
                     addRow(board, atoi(argv[2]));
-                    displayCanvas(*board);
+
                     break;
 
-                // Second command is not recognized
+                    // Second command is not recognized
                 default:
                 IAD:
                     printf("Improper add command.\n");
@@ -128,7 +124,7 @@ void readCommand(int argc, char **argv, canvas *board) {
             }
             break;
 
-        // Delete a column or row
+            // Delete a column or row
         case 'd':
         case 'D':
 
@@ -146,19 +142,19 @@ void readCommand(int argc, char **argv, canvas *board) {
                     // If requested column position is out of range, skip
                     if (atoi(argv[2]) >= board->col) goto IDC;
                     delCol(board, atoi(argv[2]));
-                    displayCanvas(*board);
+
                     break;
 
-                // Delete a row at a given position
+                    // Delete a row at a given position
                 case 'r':
                 case 'R':
                     // If requested row position is out of range, skip
                     if (atoi(argv[2]) >= board->row) goto IDC;
                     delRow(board, atoi(argv[2]));
-                    displayCanvas(*board);
+
                     break;
 
-                // Second command is not recognized
+                    // Second command is not recognized
                 default:
                 IDC:
                     printf("Improper delete command.\n");
@@ -166,74 +162,78 @@ void readCommand(int argc, char **argv, canvas *board) {
             }
             break;
 
-        // Erase a column or row
+            // Erase a column or row
         case 'e':
         case 'E':
 
             // Argument count must be three
-            // Second argument must be a single character
+            // Second argument must be a single character or positive integer
             // Third argument must be a positive integer
-            if (argc != 3 || strlen(argv[1]) != 1 || !isPosInteger(argv[2])) goto IEC;
 
-            // Use second argument to modify column or row
-            switch (argv[1][0]) {
+            if (argc != 3 || !isPosInteger(argv[2])) goto IEC;
 
-                // Erase column at a given position
-                case 'c':
-                case 'C':
-                    // If requested column is out of range, skip
-                    if (atoi(argv[2]) >= board->col) goto IEC;
+            else if (isPosInteger(argv[1])) {
+                eraseCell(board, atoi(argv[2]), atoi(argv[1]));
 
-                    eraseCol(board, atoi(argv[2]));
-                    displayCanvas(*board);
-                    break;
+            } else if (strlen(argv[1]) == 1) {
 
-                // Erase row at a given position
-                case 'r':
-                case 'R':
+                // Use second argument to modify column or row
+                switch (argv[1][0]) {
 
-                    // If requested row is out of range, skip
-                    if (atoi(argv[2]) >= board->row) goto IEC;
+                    // Erase column at a given position
+                    case 'c':
+                    case 'C':
+                        // If requested column is out of range, skip
+                        if (atoi(argv[2]) >= board->col) goto IEC;
 
-                    eraseRow(board, atoi(argv[2]));
-                    displayCanvas(*board);
-                    break;
+                        eraseCol(board, atoi(argv[2]));
+                        break;
 
-                // Second command is not recognized
-                default:
-                IEC:
-                    printf("Improper erase command.\n");
-                    break;
+                        // Erase row at a given position
+                    case 'r':
+                    case 'R':
+
+                        // If requested row is out of range, skip
+                        if (atoi(argv[2]) >= board->row) goto IEC;
+
+                        eraseRow(board, atoi(argv[2]));
+                        break;
+
+                        // Second command is not recognized
+                    default:
+                    IEC:
+                        printf("Improper erase command.\n");
+                        break;
+                }
+            } else {
+                goto IEC;
             }
             break;
-
-        // Save to file
+            // Save to file
         case 's':
         case 'S':
 
             // Argument count must equal two
             if (argc == 2) {
                 saveCanvas(board, argv[1]);
-            }
-            else {
+            } else {
                 printf("Improper save command or file could not be created.\n");
             }
             break;
 
-        // Load a file
+            // Load a file
         case 'l':
         case 'L':
 
             // Argument count must equal two
             if (argc == 2) {
                 loadCanvas(board, argv[1]);
-            }
-            else {
+            } else {
                 printf("Improper save command or file could not be opened.\n");
             }
             break;
 
-        // Commands are not recognized
+            // Commands are not recognized
         default:
         UNRECOGNIZED:
             printf("Unrecognized command. Type h for help.\n");

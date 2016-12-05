@@ -23,38 +23,45 @@ typedef struct canvas_struct {
 } canvas;
 
 canvas createCanvas(int, int);
+
 /* Summary: Generates an empty grid representing a canvas
  * Parameters: Row, Column
  * Return: Canvas object containing variables for row, column, and a multidimensional array representing a grid
  */
 
 void freeCanvas(canvas *);
+
 /* Summary: Free memory from multidimensional array within canvas struct
  * Parameters: canvas pointer
  */
 
 void displayCanvas(canvas);
+
 /* Summary: Print the elements of a multidimensional arra within the canvas struct to console
  * Parameters: canvas object
  */
 
 void addRow(canvas *, int);
+
 /* Summary: Adds a row to a canvas at a given position
  * Parameters: canvas pointer, position of insertion
  */
 
 void addCol(canvas *, int);
+
 /* Summary: Adds a column to a canvas at a given position
  *
  * Parameters: canvas pointer, position of insertion
  */
 
 void delRow(canvas *, int);
+
 /* Summary: Deletes a row from a canvas at a given position
  * Parameters: canvas pointer, position of deletion
  */
 
 void delCol(canvas *, int);
+
 /* Summary: Deletes a column from a canvas at a given position
  * Parameters: canvas pointer, position of deletion
  */

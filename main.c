@@ -9,11 +9,7 @@
 //
 
 #include <stdio.h>
-#include <string.h>
-#include "canvas.h"
 #include "commands.h"
-#include "draw.h"
-#include "arguments.h"
 
 void checkArgs(int argc, const char *argv[], int *row, int *col);
 
@@ -32,21 +28,22 @@ int main(int argc, const char *argv[]) {
 
 void checkArgs(int argc, const char *argv[], int *row, int *col) {
     // Validate arguments provided through the command line before aunching
+    bool valid = true;
 
     // If no arguments are provided, generate the default 10x10 grid.
     if (argc == 1) {
         *row = 10;
         *col = 10;
-        printf("Making default board of %d X %d.\n", *row, *col);
     }
-    // If the incorrect number of arguments are provided, alert the user and quit.
+        // If the incorrect number of arguments are provided, alert the user and quit.
     else if (argc != 3) {
+        *row = 10;
+        *col = 10;
+
         printf("Wrong number of command line arguements entered.\n");
         printf("Usage: ./paint.out [num_rows num_cols]\n");
-        exit(0);
-    }
-
-    else {
+        valid = false;
+    } else {
 
         int args = 0;
 
@@ -55,10 +52,12 @@ void checkArgs(int argc, const char *argv[], int *row, int *col) {
 
         if (args < 1) {
             printf("The number of rows is not an integer.\n");
-        }
-        else if (*row < 1) {
+            valid = false;
+
+        } else if (*row < 1) {
             printf("The number of rows is less than 1.\n");
-            exit(0);
+            valid = false;
+
         }
 
         // Check that the second argument is an integer greater than or equal to one
@@ -66,12 +65,19 @@ void checkArgs(int argc, const char *argv[], int *row, int *col) {
 
         if (args < 1) {
             printf("The number of columns is not an integer.\n");
-            exit(0);
-        }
-        else if (*col < 1) {
+            valid = false;
+
+        } else if (*col < 1) {
             printf("The number of columns is less than 1.\n");
-            exit(0);
+            valid = false;
+
         }
+
+    }
+    if (!valid) {
+        *row = 10;
+        *col = 10;
+        printf("Making default board of %d X %d.", *row, *col);
     }
 }
 

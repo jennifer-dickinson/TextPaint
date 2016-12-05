@@ -55,22 +55,22 @@ void displayCanvas(canvas board) {
     for (int row_index = board.row - 1; row_index + 1 > 0; row_index--) {
 
         // Print the row numbers
-        printf("%2d", row_index);
+        printf("%3d", row_index);
 
         for (int col_index = 0; col_index < board.col; col_index++) {
             // Print cell contents
-            printf("%2c", board.grid[col_index][row_index]);
+            printf("%3c", board.grid[col_index][row_index]);
         }
 
         printf("\n");
     }
 
-    printf("%2s", "");
+    printf("%3s", "");
 
     for (int row_index = 0; row_index < board.col; row_index++) {
 
         // Print the column numbers
-        printf("%2d", row_index);
+        printf("%3d", row_index);
     }
     printf("\n");
 }
