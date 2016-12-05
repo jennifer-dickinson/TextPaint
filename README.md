@@ -1,6 +1,9 @@
 # TextPaint
 
-This is a text-based paint program that will generate a 10x10 grid by default. A user may draw lines, resize the grid, add or delete columns and rows, erase columns, rows or cells, and save the current grid to a file or load a previously saved grid.
+This is a text-based paint program that will generate a 10x10 grid by default.
+A user may draw lines, resize the grid, add or delete columns and rows, erase
+columns, rows or cells, and save the current grid to a file or load a
+previously saved grid.
 ___
 **Author: Jennifer Salas**
 
@@ -34,5 +37,6 @@ A sample save file is provided, load with ` l samplesave `.
 
 ###Other
 
-For descriptions of individual .c files and functions, view the corresponding .h files.
+For descriptions of individual .c files and functions, view the corresponding
+.h files.
 
