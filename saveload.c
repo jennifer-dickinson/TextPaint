@@ -24,7 +24,7 @@ void saveCanvas(canvas *board, char *filename) {
     } else {
 
         // Write number of rows and columns
-        fprintf(outFile, "Col: %d Row: %d\n", board->col, board->row);
+        fprintf(outFile, "Row: %d Col: %d\n", board->row, board->col);
 
         // Write the grid
         for (int row_index = board->row - 1; row_index + 1 > 0; row_index--) {
@@ -56,7 +56,7 @@ void loadCanvas(canvas *board, char *filename) {
         int row = 0;
 
         // Get the number of rows and columns
-        fscanf(inFile, "Col: %d Row: %d ", &col, &row);
+        fscanf(inFile, "Row: %d Col: %d ", &row, &col);
 
         // Resize canvas
         resize(board, col, row);
